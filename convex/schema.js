@@ -6,5 +6,28 @@ export default defineSchema({
         username: v.string(),
         email: v.string(),
         imageUrl: v.string(),
-    })
+    }),
+
+    pdffiles: defineTable({
+        fileId: v.string(),
+        storageId: v.string(),
+        filename: v.string(),
+        fileUrl: v.string(),
+        createdBy: v.string(),
+    }),
+    documents: defineTable({
+        embedding: v.array(v.number()), // vector storage
+        text: v.string(),               // original text
+        metadata: v.any(),               // optional metadata
+      }).vectorIndex("byEmbedding", {     // vector search index
+        vectorField: "embedding",
+        dimensions: 768,                 // must match embedding model output
+      }),
+
+      notes:defineTable({
+         fileId:v.string(),
+         notes:v.string(),
+         createdBy:v.string()  
+
+      })
 })
